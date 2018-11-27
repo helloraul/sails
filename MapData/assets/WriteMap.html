@@ -1,0 +1,42 @@
+ <head>
+    
+    </head>
+    <body>
+       
+  <div id="select" style="float:left; margin-right:17px; border:1px solid green"></div>
+ 
+        <script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "/mapData"
+        xmlhttp.open("POST", url, true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.onreadystatechange = function ()
+		{
+			if(xmlhttp.readyState === 4)
+			{
+				if(xmlhttp.status === 201)
+				{
+					var allText = xmlhttp.responseText;
+					console.log("status =  " + xmlhttp.status + " text = "  + allText)
+				}
+				else
+				{
+					var allText = xmlhttp.responseText;
+					console.log("status =  " + xmlhttp.status + " text = "  + allText)
+				}
+			}
+
+		}
+		let newData = {
+			"title": "map2",
+			"resize": false,
+			"recenter": false,
+			"mapType": "Stamen",
+			"screenSize": "1024x768",
+			"latitude": -155,
+			"longitude": 30
+		}
+        xmlhttp.send(JSON.stringify(newData))
+        </script>
+    </body>
+</html>

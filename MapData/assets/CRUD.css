@@ -1,0 +1,86 @@
+/*
+ *     File:      CRUD.css
+ *     Author:    Charles W. Kann
+ *     Date:      July 8, 2017
+ *
+ *     Purpose:   To define the styling for 
+ *                the CRUD application
+ */
+ 
+/* 
+     CSS for the header of the page
+ */	 
+header {
+  margin : 5px 50px 5px 50px;
+  border : 2px solid blue;
+  background-color : slategray;
+  color : white;
+}
+	  
+header p {
+  font-size : 150%;
+}
+	  
+.header-icon {
+  display : inline-block;
+  margin: 50px 10px 50px
+}
+ 
+.header-desc {
+  display : inline-block;
+  margin : 25px;
+}
+	 
+.header-menu {
+  display : inline-block;
+  float: right;
+  margin : 50px 50px 50px 50px;
+ }
+ 
+/* 
+     CSS for the input form (Panel 2)
+ */		 
+#inputForm {
+  margin : 0px 50px 5px 5px;
+  background-color : beige;
+  border : 2px solid black;
+  display: none;
+  float : right;
+  padding : 20px;
+  width : 42%;
+  height : 70%;
+}
+
+
+/* 
+     CSS for the records (Panel 1)
+ */	 
+#recordDivision {
+  margin : 0px 5px 5px 50px;
+  background-color : beige;
+  border : 2px solid black;
+  display: inline-block;
+  float : left;
+  padding : 20px;
+  width : 35%;
+  height : 70%;
+}
+	
+/*
+    Select list for records
+ */	
+#dataRecords {
+  width : 300px;
+}
+
+/* 
+    Gray out read-only input
+ */
+input:-moz-read-only { /* For Firefox */
+  background-color: lightgray;
+}
+
+
+input:read-only {
+  background-color: lightgray;
+}

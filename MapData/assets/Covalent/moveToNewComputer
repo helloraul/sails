@@ -1,0 +1,4 @@
+1 - Create new project
+2 - Copy the public directory
+3 - rails generate scaffold image title:string center:string scale:string extent:string url:string description:string
+4 - rake db:migrate

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head><style type="text/css">body{
+  margin: 0;
+  background: #E0E0E0;
+  font-family: sans-serif;
+}
+
+header, footer, aside{
+  display: block;
+}
+.title{
+ min-width: 1200px;
+ float: left;
+ background: #ffffcc; 
+ min-height: 60px;
+   padding: 10px;
+}
+.upper{
+  min-width: 1200px;
+  height: 300px;
+  background: #e6f2ff;
+  float: left;
+    padding: 10px;
+}
+.lower{
+  min-width: 1200px;
+  height: 800px;
+  background: #e6ffe6;
+  float: left;
+  padding: 10px;
+  text-align: center;
+}
+
+h1{
+  color: red;
+  text-align: center;
+}
+
+label{
+  width: 200px;
+  display: inline-block;  
+  padding: 0 10px;  
+  vertical-align: middle;  
+}
+
+.text{
+  width: 200px;
+  display: inline-block;  
+  padding: 0 10px;  
+  vertical-align: middle;  
+}
+.number{
+  width: 200px;
+  display: inline-block;  
+  padding: 0 10px;  
+  vertical-align: middle;  
+}
+button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width:  100px;
+}
+
+table{
+  width: 800px;
+    border-collapse: collapse;
+}
+
+th,td{
+  border: 2px solid black;
+  padding: 2px;
+}
+
+th{
+  background: #FF7575;
+}
+
+</style><title> All Record Viewer</title>
+</head><body>
+  <div class="container">
+  <header class="title"><h1>All Record Viewer</h1></header>
+  <aside class="lower">
+    <table id="table">
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+			<tbody id="tableContent"></tbody>
+    </table>
+  </aside>
+
+  </div>
+<script>window.onload = function(){
+    init();
+};
+
+ var editIndex = -1;
+ var radio1 = 0;
+
+function init(){
+    document.getElementById("tableContent").innerHTML = "";
+    var xmlhttp = new XMLHttpRequest();
+    var url = "/pictures.json"
+    xmlhttp.open("GET", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function ()
+    {
+      if(xmlhttp.readyState === 4)
+      {
+        if(xmlhttp.status === 200)
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+          array = JSON.parse(allText);
+          for (var i = 0; i < array.length; i++){
+             var name = array[i].name;
+             var type = array[i].kind;
+             var number = array[i].number;
+             var color = array[i].color;
+             var sex = array[i].sex;
+             var hp = array[i].hp;
+             var attack = array[i].attack;
+             var defence = array[i].defence;
+             var sepAttack = array[i].sepAttack;
+             var sepDefence = array[i].sepDefence;
+             var speed = array[i].speed;
+             var index = array[i].id;
+             var desc = array[i].created_at;
+             console.log(array[i]);
+             buildTable(desc, index, number, color, sex, hp, attack, defence, sepAttack, sepDefence, speed, index);
+            }
+
+        }
+        else
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+        }
+      }
+    }
+    xmlhttp.send(JSON.stringify());
+}
+
+function onClickSave(){
+   var name = document.getElementById("name").value;
+   var kind = document.getElementById("type").value;
+   var number = document.getElementById("id").value;
+   var color = document.getElementById("color").value;
+   var sex = document.getElementById("sex").value;
+   var hp = document.getElementById("hp").value;
+   var attack = document.getElementById("attack").value;
+   var defence = document.getElementById("defence").value;
+   var sepAttack = document.getElementById("sepAttack").value;
+   var sepDefence = document.getElementById("sepDefence").value;
+   var speed = document.getElementById("speed").value;
+  
+   var pokemon = {name: name, kind: kind, number: number, color: color, sex: sex, hp: hp, attack: attack, defence: defence, sepAttack: sepAttack, sepDefence: sepDefence, speed: speed};
+    var xmlhttp = new XMLHttpRequest();
+    var url = "/articles.json"
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function ()
+    {
+      if(xmlhttp.readyState === 4)
+      {
+        if(xmlhttp.status === 201)
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText);
+           init();
+		   document.getElementById("name").value = "";
+		   document.getElementById("type").value= "Normal";
+		   document.getElementById("id").value= "";
+		   document.getElementById("color").value= "";
+		   document.getElementById("sex").value= "Male";
+		   document.getElementById("hp").value= "";
+		   document.getElementById("attack").value= "";
+		   document.getElementById("defence").value= "";
+		   document.getElementById("sepAttack").value= "";
+		   document.getElementById("sepDefence").value= "";
+		   document.getElementById("speed").value= "";
+		   if (editIndex != -1){
+		   	  deleteLine(editIndex);
+		   } 
+        }
+        else
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+        }
+      }
+    }
+   xmlhttp.send(JSON.stringify(pokemon));
+}
+
+function buildTable(name, type, id, color, sex, hp, attack, defence, sepAttack, sepDefence, speed, index){
+   var table = document.getElementById("tableContent");
+   var row = table.insertRow(); 
+   var nameCell = row.insertCell(0);
+   var typeCell = row.insertCell(1);
+   var idCell = row.insertCell(2);
+   var colorCell = row.insertCell(3);
+   var sexCell = row.insertCell(4);
+   var hpCell = row.insertCell(5);
+   var attackCell = row.insertCell(6);
+   var defenceCell = row.insertCell(7);
+   var sepAttackCell = row.insertCell(8);
+   var sepDefenceCell = row.insertCell(9);
+   var speedCell = row.insertCell(10);
+   var actionCell = row.insertCell(11);
+	
+	nameCell.innerHTML = name;   
+    typeCell.innerHTML = type;   
+	idCell.innerHTML = id;   
+	colorCell.innerHTML = color;   
+	sexCell.innerHTML = sex;   
+	hpCell.innerHTML = hp;   
+	attackCell.innerHTML = attack;   
+	defenceCell.innerHTML = defence;   
+	sepAttackCell.innerHTML = sepAttack;   
+	sepDefenceCell.innerHTML = sepDefence;   
+	speedCell.innerHTML = speed;   
+    actionCell.innerHTML = '<button onclick = "deleteLine('+index+')">Delete</button>';
+}
+
+function deleteLine(index){
+    var table = document.getElementById("table");
+    var xmlhttp = new XMLHttpRequest();
+    console.log(index);
+    var url = "/pictures/" + index + ".json"
+    console.log(index);
+    console.log(url);
+    xmlhttp.open("DELETE", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function ()
+    {
+       if(xmlhttp.readyState === 4)
+       {
+            if(xmlhttp.status === 204)
+            {
+              var allText = xmlhttp.responseText;
+              console.log("status =  " + xmlhttp.status + " text = "  + allText)
+              init();
+            }
+            else
+            {
+               var allText = xmlhttp.responseText;
+               console.log("status =  " + xmlhttp.status + " text = "  + allText)
+            }
+        }
+
+     }
+    xmlhttp.send(JSON.stringify(array));
+}
+
+function edit(index){
+    var xmlhttp = new XMLHttpRequest();
+    var url = "/articles.json"
+    xmlhttp.open("GET", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function ()
+    {
+      if(xmlhttp.readyState === 4)
+      {
+        if(xmlhttp.status === 200)
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+           array = JSON.parse(allText);
+          for (var i = 0; i < array.length; i++){
+              if (index === array[i].id){
+                   editIndex = index;
+                   document.getElementById("name").value = array[i].name;
+                   document.getElementById("type").value= array[i].kind;
+                   document.getElementById("id").value= array[i].number;
+                   document.getElementById("color").value= array[i].color;
+                   document.getElementById("sex").value= array[i].sex;
+                   document.getElementById("hp").value= array[i].hp;
+                   document.getElementById("attack").value= array[i].attack;
+                   document.getElementById("defence").value= array[i].defence;
+                   document.getElementById("sepAttack").value= array[i].sepAttack;
+                   document.getElementById("sepDefence").value= array[i].sepDefence;
+                   document.getElementById("speed").value= array[i].speed;
+              }
+          }
+          // init();
+        }
+        else
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+        }
+      }
+
+    }
+    xmlhttp.send(JSON.stringify())
+
+}
+
+function writeArticle(){
+    var xmlhttp = new XMLHttpRequest();
+    var url = "/articles.json"
+    xmlhttp.open("POST", url, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.onreadystatechange = function ()
+    {
+      if(xmlhttp.readyState === 4)
+      {
+        if(xmlhttp.status === 201)
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+        }
+        else
+        {
+          var allText = xmlhttp.responseText;
+          console.log("status =  " + xmlhttp.status + " text = "  + allText)
+        }
+      }
+    }
+}
+
+</script></body>

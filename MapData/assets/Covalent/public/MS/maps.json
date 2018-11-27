@@ -1,0 +1,59 @@
+[
+    [
+      {
+        "instanceType":"StamenMap",
+        "label":"watercolor",
+        "title": "title of map1",
+        "desciption" : "desciption of map1",
+        "author" : "author of map1"
+      },
+      {
+        "instanceType":"StamenMap",
+        "label":"terrain-lines"
+      },
+      {
+        "instanceType":"StamenMap",
+        "label":"terrain-labels"
+      }
+    ],
+    [
+      {
+        "instanceType":"XYZMap",
+        "url":"https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "title": "title of map2",
+        "desciption" : "desciption of map2",
+        "author" : "author of map2"
+      }
+    ],
+    [
+      {
+        "instanceType":"StamenMap",
+        "label": "terrain-background",
+        "title": "title of map3",
+        "desciption" : "desciption of map3",
+        "author" : "author of map3"
+      },
+      {
+        "instanceType":"StamenMap",
+        "label":"terrain-lines"
+      },
+      {
+        "instanceType":"StamenMap",
+        "label":"terrain-labels"
+      }
+    ],
+    [
+      {
+        "instanceType":"StamenMap",
+        "label": "toner-hybrid",
+        "title": "title of map4",
+        "desciption" : "desciption of map4",
+        "author" : "author of map4"
+      },
+      {
+        "instanceType":"StamenMap",
+        "label": "toner-labels"
+      }
+    ]
+]
+

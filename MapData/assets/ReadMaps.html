@@ -1,0 +1,20 @@
+ <html>
+    
+    </head>
+    <body>
+       
+  <div id="select" style="float:left; margin-right:17px; border:1px solid green"></div>
+ 
+        <script>
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", "mapdata", true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.onreadystatechange = function ()
+		{
+		   if (xmlhttp.readyState == 4) 
+				console.log(" text = "  + xmlhttp.responseText);
+		}
+        xmlhttp.send();
+        </script>
+    </body>
+</html>
